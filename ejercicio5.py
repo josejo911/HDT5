@@ -1,7 +1,7 @@
 # Universidad del Valle de Guatemala
 # Algoritmos y Estructura de datos
 #Jennifer Barillas 15307
-#Javier Jo
+#Javier Jo 14343
 
 
 import simpy
@@ -14,12 +14,12 @@ def proceso(env, time_process, nombre, ram, memory, cant_inst, velocidad):
     global tiempoTotal
    #New
     yield env.timeout(time_process)
-    print('time: %f : %s NEW cantidad %d de memoria ram' % (env.now, nombre, memory))
+    print('tiempo: %f : %s NEW cantidad %d de memoria ram' % (env.now, nombre, memory))
     time_now = env.now 
     
     #memoria
     yield ram.get(memory)
-    print('time: %f : %s acepta la solicitud por %d de memoria ram' % (env.now, nombre, memory))
+    print('tiempo: %f : %s acepta la solicitud por %d de memoria ram' % (env.now, nombre, memory))
 
     #Revisar si las intrucciones estan completas
     check = 0
@@ -34,12 +34,12 @@ def proceso(env, time_process, nombre, ram, memory, cant_inst, velocidad):
             else:
                 realizar=(cant_inst-check)
             #tiempo de instrucciones a ejecutar
-            print('time: %f : %s READY el cpu ejecutara %d instrucciones' % (env.now, nombre, realizar))
+            print('tiempo: %f : %s READY el cpu ejecutara %d instrucciones' % (env.now, nombre, realizar))
             yield env.timeout(realizar/velocidad)
 
             #instrucciones completas
             check += realizar
-            print('time: %f : %s RUNNING (%d/%d) listo!' % (env.now, nombre, check, cant_inst))
+            print('tiempo: %f : %s RUNNING (%d/%d) listo!' % (env.now, nombre, check, cant_inst))
 
         #CONDICION: Decide si espera o pasa a ready
         verificar = random.randint(1,2)
@@ -49,10 +49,10 @@ def proceso(env, time_process, nombre, ram, memory, cant_inst, velocidad):
                 yield req2
                 #tiempo de operaciones
                 yield env.timeout(1)                
-                print('time: %f : %s WAITING operaciones (in/out)' % (env.now, nombre))
+                print('tiempo: %f : %s WAITING operaciones (in/out)' % (env.now, nombre))
     
     yield ram.put(memory)
-    print('time: %f : %s TERMINATED, %d de memoria ram' % (env.now, nombre, memory))
+    print('tiempo: %f : %s TERMINATED, %d de memoria ram' % (env.now, nombre, memory))
     #tiempo de todos los procesos
     tiempoTotal += (env.now -time_now) 
     tiempos.append(env.now - time_now)
