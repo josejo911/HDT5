@@ -7,6 +7,9 @@
 import simpy
 import random
 
+#cant_inst: cantidad de instrucciones
+#time_process: tiempo de proceso
+
 def proceso(env, time_process, nombre, ram, memory, cant_inst, velocidad):
     global tiempoTotal
    #New
